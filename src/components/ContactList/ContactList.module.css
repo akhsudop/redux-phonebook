@@ -1,0 +1,19 @@
+.contactDetails {
+  display: flex;
+  justify-content: space-between;
+  padding-block: 5px;
+}
+
+.contactList {
+  padding-left: 0;
+}
+.contactDetails button {
+  background-color: rgb(170, 159, 179);
+  border: 0;
+  border-radius: 5px;
+  color: azure;
+}
+.contactDetails button:active {
+  background-color: rgb(200, 154, 244);
+  border: 0;
+}

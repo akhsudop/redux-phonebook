@@ -1,0 +1,8 @@
+.filterSec input {
+  margin-left: 10px;
+}
+
+.filterSec label {
+  font-style: italic;
+  font-size: 15px;
+}
