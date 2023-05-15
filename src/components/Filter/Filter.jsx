@@ -1,4 +1,5 @@
 import css from '../Filter/Filter.module.css';
+import PropTypes from 'prop-types';
 
 export const Filter = ({ value, onChange }) => (
   <section className={css.filterSec}>
@@ -16,3 +17,8 @@ export const Filter = ({ value, onChange }) => (
     </label>
   </section>
 );
+
+Filter.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};

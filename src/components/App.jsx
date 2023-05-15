@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactsList } from './ContactList/ContactsList';
+import PropTypes from 'prop-types';
 
 const INITIAL_STATE = {
   contacts: [],
@@ -69,3 +70,8 @@ export class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  id: PropTypes.string,
+  contacts: PropTypes.arrayOf(PropTypes.object),
+};
