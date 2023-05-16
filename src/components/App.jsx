@@ -5,6 +5,7 @@ import { Filter } from './Filter/Filter';
 import { ContactsList } from './ContactList/ContactsList';
 import PropTypes from 'prop-types';
 
+const CONTACTS_STORAGE_KEY = 'phonebook-contacts';
 const INITIAL_STATE = {
   contacts: [],
   filter: '',
@@ -12,6 +13,26 @@ const INITIAL_STATE = {
 
 export class App extends Component {
   state = { ...INITIAL_STATE };
+
+  componentDidMount = () => {
+    try {
+      const startList = JSON.parse(localStorage.getItem(CONTACTS_STORAGE_KEY));
+      if (startList) {
+        this.setState({ contacts: startList });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  componentDidUpdate = prevState => {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem(
+        CONTACTS_STORAGE_KEY,
+        JSON.stringify(this.state.contacts)
+      );
+    }
+  };
 
   addContact = ({ name, number }) => {
     const { contacts } = this.state;
