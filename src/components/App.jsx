@@ -26,14 +26,6 @@ export const App = () => {
     localStorage.setItem(CONTACTS_STORAGE_KEY, JSON.stringify(contacts));
   }, [contacts]);
 
-  useEffect(() => {
-    setContacts(
-      contacts.filter(contact =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-      )
-    );
-  }, [filter]);
-
   const addContact = ({ name, number }) => {
     const isAlreadyExist = contacts.find(
       contact => contact.name.toLowerCase() === name.toLowerCase()
@@ -46,6 +38,11 @@ export const App = () => {
     }
   };
 
+  const getVisibleContacts = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
   const handleFilterChange = evt => {
     setFilter(evt.currentTarget.value);
   };
@@ -53,14 +50,14 @@ export const App = () => {
   const handleDeleteContact = contactId => {
     setContacts(contacts.filter(contact => contact.id !== contactId));
   };
-
+  const visibleContacts = getVisibleContacts();
   return (
     <>
       <h2>Phonebook</h2>
       <ContactForm onSubmit={addContact} />
       <h3>Contacts:</h3>
       <Filter value={filter} onChange={handleFilterChange} />
-      <ContactsList contacts={contacts} onDelete={handleDeleteContact} />
+      <ContactsList contacts={visibleContacts} onDelete={handleDeleteContact} />
     </>
   );
 };
