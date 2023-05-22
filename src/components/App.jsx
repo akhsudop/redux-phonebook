@@ -8,19 +8,10 @@ import PropTypes from 'prop-types';
 const CONTACTS_STORAGE_KEY = 'phonebook-contacts';
 
 export const App = () => {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(
+    JSON.parse(localStorage.getItem(CONTACTS_STORAGE_KEY)) ?? []
+  );
   const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    try {
-      const startList = JSON.parse(localStorage.getItem(CONTACTS_STORAGE_KEY));
-      if (startList) {
-        setContacts(startList);
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem(CONTACTS_STORAGE_KEY, JSON.stringify(contacts));
@@ -50,6 +41,7 @@ export const App = () => {
   const handleDeleteContact = contactId => {
     setContacts(contacts.filter(contact => contact.id !== contactId));
   };
+
   const visibleContacts = getVisibleContacts();
   return (
     <>
