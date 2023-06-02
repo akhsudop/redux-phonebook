@@ -20,6 +20,7 @@ export const ContactForm = () => {
       dispatch(
         addContact(e.target.elements.name.value, e.target.elements.number.value)
       );
+      e.target.reset();
     }
   };
 
