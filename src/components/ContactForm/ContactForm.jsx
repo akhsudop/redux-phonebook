@@ -1,16 +1,26 @@
-import { useState } from 'react';
 import css from '../ContactForm/ContactForm.module.css';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
 
-export const ContactForm = ({ onSubmit }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts);
 
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    setName('');
-    setNumber('');
-    onSubmit({ name, number });
+  const handleSubmit = e => {
+    e.preventDefault();
+    const isAlreadyExist = contacts.find(
+      contact =>
+        contact.name.toLowerCase() ===
+        e.target.elements.name.value.toLowerCase()
+    );
+    if (isAlreadyExist) {
+      window.alert(`Contact ${isAlreadyExist.name} already exists`);
+    } else {
+      dispatch(
+        addContact(e.target.elements.name.value, e.target.elements.number.value)
+      );
+    }
   };
 
   return (
@@ -20,11 +30,9 @@ export const ContactForm = ({ onSubmit }) => {
         <input
           type="text"
           name="name"
-          value={name}
           pattern="^[a-zA-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
-          onChange={e => setName(e.currentTarget.value)}
         />
       </label>
       <label>
@@ -32,11 +40,9 @@ export const ContactForm = ({ onSubmit }) => {
         <input
           type="tel"
           name="number"
-          value={number}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          onChange={e => setNumber(e.currentTarget.value)}
         />
       </label>
       <button type="submit" className={css.submitBtn}>
@@ -47,7 +53,5 @@ export const ContactForm = ({ onSubmit }) => {
 };
 
 ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  name: PropTypes.string,
-  number: PropTypes.string,
+  handleSubmit: PropTypes.func,
 };
