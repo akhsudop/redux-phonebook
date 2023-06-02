@@ -35,15 +35,6 @@ process:
   Extension, providing a powerful debugging tool for inspecting and manipulating
   the application state.
 
-## Getting Started
-
-To get started with the Phonebook app, follow these steps:
-
-1. Clone the repository: `git clone <repository-url>`
-2. Install dependencies: `npm install`
-3. Start the development server: `npm start`
-4. Open the app in your browser at `http://localhost:3000`
-
 ## Usage
 
 1. Fill in the contact form with the required information.
